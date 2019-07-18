@@ -6,6 +6,13 @@
     <title>Title1</title>
 
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+{#    <style>#}
+{#        td:first-child {#}
+{#            cursor: pointer; /* Вид курсора */#}
+{#        }#}
+{#    </style>#}
+
+
 {#        <link rel="stylesheet" href="/static/css/bootstrap.min.css">#}
     {#    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">#}
 </head>
@@ -20,7 +27,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="http://bootstrap-3.ru/examples/jumbotron/#">Project name</a>
+            <a class="navbar-brand" href="#">Бронирование рабочих мест</a>
         </div>
         <div class="navbar-collapse collapse">
             <form class="navbar-form navbar-right" role="form">
@@ -40,56 +47,154 @@
 
     <h2>{{ weekday }}</h2>
 
-    {% for item in booking %}
-
-        {#        {% for object in item.object %}#}
-        <p>{{ item.title }}</p>
-{#        {% for user in item.object.user.all %}#}
-{#            <p>{{ user.username }}</p>#}
-{#        {% endfor %}#}
-        {% for object in item.object %}
-            {% for user in object.user.all %}
-                <p>{{ user.username }}</p>
-            {% endfor %}
+    {% for object in booking %}
+        {#        {% for object in item %}#}
+        <p>{{ object.title }}</p>
+        {% for user in object.user.all %}
+            <p>{{ user.username }}</p>
         {% endfor %}
         {#        {% endfor %}#}
-
-        {#        {% for user in item.user.all %}#}
-        {#            <p>{{ user.username }}</p>#}
-        {#        {% endfor %}#}
-
     {% endfor %}
 
-    // передавать только объект, брать title только из него, убрать список и словарь
-
     <table class="table table-bordered table-dark">
+
         <thead>
         <tr>
             <th scope="col">#</th>
-            {% for item in booking %}
-                <th scope="col">{{ item.title }}</th>
 
-                {% for object in item.object %}
-                    {% for user in object.user.all %}
-{#                        <p>{{ user.username }}</p>#}
-                    {% endfor %}
-                {% endfor %}
+
+            {% for object in booking %}
+                <th scope="col">{{ object.title }}</th>
+
+{#                <table class="table table-bordered table-dark">#}
+{#                    <tr>#}
+{#                    {% for user in object.user.all %}#}
+{#                        <td>{{ user.username }}</td>#}
+{#                    {% endfor %}#}
+{#                    </tr>#}
+{#                </table>#}
+
             {% endfor %}
+
+{#            {% for item in booking %}#}
+{#                {% for object in item %}#}
+{#                    <th scope="col">{{ item.title }}</th>#}
+{#                    {% for user in object.user.all %}#}
+{#                        <p>{{ user.username }}</p>#}
+{#                    {% endfor %}#}
+{#                {% endfor %}#}
+{#            {% endfor %}#}
         </tr>
         </thead>
+
         <tbody>
         <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>Mark</td>
-            <td>Mark</td>
-            <td>Mark</td>
-            <td><a href="#">Edit</a> <a href="#">Delete</a></td>
+
+{#            {% for item in booking %}#}
+{#                {% for object in item %}#}
+{#                    {% for user in object.user.all %}#}
+{#                        <p>{{ user.username }}</p>#}
+{#                    {% endfor %}#}
+{#                {% endfor %}#}
+{#            {% endfor %}#}
+
+
+            <th scope="row">
+{#                <ul type="circle">#}
+{#                    <li>С</li>#}
+{#                    <li>О</li>#}
+{#                    <li>Т</li>#}
+{#                    <li>Р</li>#}
+{#                    <li>У</li>#}
+{#                    <li>Д</li>#}
+{#                    <li>Н</li>#}
+{#                    <li>И</li>#}
+{#                    <li>К</li>#}
+{#                    <li>И</li>#}
+{#                </ul>#}
+                <dl>
+                    <dd>C</dd>
+                    <dd>О</dd>
+                    <dd>Т</dd>
+                    <dd>Р</dd>
+                    <dd>У</dd>
+                    <dd>Д</dd>
+                    <dd>Н</dd>
+                    <dd>И</dd>
+                    <dd>К</dd>
+                    <dd>И</dd>
+                </dl>
+            </th>
+
+
+
+            {% for object in booking %}
+
+                {#                <td scope="col">{{ object.title }}</td>#}
+
+                {#                <table class="table table-bordered">#}
+                <td onclick="document.location='page/new.html'" scope="col">
+                    <ol type="!">
+                        {% for user in object.user.all %}
+                            {#                        <tr>#}
+                            {#                            <th scope="row">1</th>#}
+                            {#                            <td>{{ user.username }}</td>#}
+                            {#                        <td scope="col">#}
+
+                            <li>{{ user.username }}</li>
+
+                            {#                        </td>#}
+                            {#                        </tr>#}
+                        {% endfor %}
+                    </ol>
+                    <h5>Свободных мест: -</h5>
+                    <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+                </td>
+                {#                </table>#}
+
+            {% endfor %}
+
+
+
+            {#        <th scope="row">2</th>#}
+            {#            <td>Mark</td>#}
+            {#            <td>Otto</td>#}
+            {#            <td>@mdo</td>#}
+            {#            <td>Mark</td>#}
+            {#            <td>Mark</td>#}
+            {#            <td>Mark</td>#}
+            {#            <td><a href="#">Edit</a> <a href="#">Delete</a></td>#}
         </tr>
         <tr>
-            <th scope="row">2</th>
+        <th scope="row">#</th>
+                {% for object in booking %}
+
+                {#                <td scope="col">{{ object.title }}</td>#}
+
+                {#                <table class="table table-bordered">#}
+                <td scope="col">
+
+                    <h5>Свободных мест: -</h5>
+                    <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+                </td>
+                {#                </table>#}
+
+            {% endfor %}
+        </tr>
+        <tr>
+            <th scope="row">
+                <dl>
+                    <dd>C</dd>
+                    <dd>О</dd>
+                    <dd>Т</dd>
+                    <dd>Р</dd>
+                    <dd>У</dd>
+                    <dd>Д</dd>
+                    <dd>Н</dd>
+                    <dd>И</dd>
+                    <dd>К</dd>
+                    <dd>И</dd>
+                </dl></th>
             <td>Jacob</td>
             <td>Thornton</td>
             <td>@fat</td>
@@ -108,6 +213,7 @@
             <td>@twitter</td>
         </tr>
         </tbody>
+
     </table>
 
     <!-- Example row of columns -->
