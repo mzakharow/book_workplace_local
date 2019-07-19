@@ -1,13 +1,17 @@
-import calendar
 import datetime
 
-from django.http import HttpResponse
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template import loader
+from django.urls import reverse
 
+from booking.forms import LoginForm
 from booking.models import Booking
 
 
+@login_required
 def index(request):
     template = loader.get_template('booking/index.html')
     first_date = datetime.datetime.now()
@@ -21,7 +25,6 @@ def index(request):
         first_week.append(book_object)
     week_list = [first_week]
 
-    # цикл сколько недель нужно после основной
     for count in range(0, 3):
         book_list = []
         for key in weekdays:
@@ -31,9 +34,37 @@ def index(request):
             book_list.append(book_object)
 
         week_list.append(book_list)
-    # конец цикла
 
     context = {'booking_main': first_week, 'booking_second': book_list, 'weeks': week_list}
     return HttpResponse(template.render(context, request))
 
 
+def login_view(request):
+    form = LoginForm(request.POST or None)
+
+    if form.is_valid():
+        user = authenticate(username=request.POST['username'], password=request.POST['password'])
+        # user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+        login(request, user=user)
+        return HttpResponseRedirect(reverse('index'))
+    context = {
+        'form': form,
+    }
+    return render(request, 'booking/login.html', context)
+
+
+def reserve_view(request, str_date):
+    date = datetime.datetime.strptime(str_date, "%Y-%m-%d")
+    book_object = Booking.objects.get(day=date)
+    if request.user not in book_object.user.all():
+        book_object.user.add(request.user)
+        book_object.save()
+    return HttpResponseRedirect(reverse('index'))
+
+
+def unreserve_view(request, str_date):
+    date = datetime.datetime.strptime(str_date, "%Y-%m-%d")
+    book_object = Booking.objects.get(day=date)
+    book_object.user.remove(request.user)
+    book_object.save()
+    return HttpResponseRedirect(reverse('index'))

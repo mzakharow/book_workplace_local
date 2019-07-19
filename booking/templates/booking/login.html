@@ -1,0 +1,29 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<!-- saved from url=(0038)http://bootstrap-3.ru/examples/signin/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Вход</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+
+<body>
+<div class="container">
+    {% if not request.user.is_authenticated %}
+        <h2 class="text-center">Вход пользователя</h2>
+        <div class="form-group text-center">
+            <form action='' method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" class="btn btn-success" value="Войти">
+            </form>
+        </div>
+    {% else %}
+        <div class="text-center">
+            <h3 class="text-center">Вы вошли как {{ request.user }}</h3>
+            <a href='{% url 'logout' %}'><button type="button" class="btn btn-danger btn-lg">Выход</button></a>
+        </div>
+    {% endif %}
+</div>
+
+</body>
+</html>

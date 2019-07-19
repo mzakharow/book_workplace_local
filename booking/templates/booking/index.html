@@ -6,6 +6,7 @@
     <title>Title1</title>
 
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
     {#    <style>#}
     {#        td:first-child {#}
     {#            cursor: pointer; /* Вид курсора */#}
@@ -20,31 +21,35 @@
 
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Бронирование рабочих мест</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <form class="navbar-form navbar-right" role="form">
-                <div class="form-group">
-                    <input type="text" placeholder="Email" class="form-control">
-                </div>
-                <div class="form-group">
-                    <input type="password" placeholder="Password" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-success">Sign in</button>
-            </form>
-        </div><!--/.navbar-collapse -->
+        {% if not request.user.is_authenticated %}
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Гость</a>
+            </div>
+        {% else %}
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Пользователь: {{ request.user }}</a>
+            </div>
+            <div class="align-content-center">
+                <ul class="pull-right">
+                    <a class="navbar-header" href='{% url 'logout' %}'><button type="button" class="btn btn-danger btn-sm">Выход</button></a>
+                </ul>
+            </div>
+        {% endif %}
+        {#        <div class="align-content-center">#}
+        {#            <ul class="header-links pull-right ">#}
+        {##}
+        {#                    Гость#}
+        {#                {% else %}#}
+        {#                    <a class="navbar-brand" href="#">Пользователь: {{ request.user }}</a>#}
+        {#                    <a class="navbar-collapse" href='{% url 'logout' %}'><button type="button" class="btn btn-danger btn-sm">Выход</button></a>#}
+        {#                {% endif %}#}
+        {#            </ul>#}
+        {#        </div>#}
     </div>
 </div>
 
 <div class="container">
-
+    <hr>
     {#    {% for object in booking %}#}
     {#        {% for object in item %}#}
     {#        <p>{{ object.title }}</p>#}
@@ -54,150 +59,145 @@
     {#        {% endfor %}#}
     {#    {% endfor %}#}
 
-{#       <table class="table table-bordered table-dark">#}
-{##}
-{#        <thead>#}
-{#        <tr>#}
-{#            <th scope="col">#</th>#}
-{##}
-{##}
-{#            {% for object in booking_main %}#}
-{#                <th scope="col">{{ object.title }}</th>#}
-{#            {% endfor %}#}
-{#        </tr>#}
-{#        </thead>#}
-{##}
-{#        <tbody>#}
-{#        <tr>#}
-{##}
-{#            <th scope="row">#}
-{#                <dl>#}
-{#                    <dd>C</dd>#}
-{#                    <dd>О</dd>#}
-{#                    <dd>Т</dd>#}
-{#                    <dd>Р</dd>#}
-{#                    <dd>У</dd>#}
-{#                 <dd>Д</dd>#}
-{#                    <dd>Н</dd>#}
-{#                    <dd>И</dd>#}
-{#                    <dd>К</dd>#}
-{#                    <dd>И</dd>#}
-{#                </dl>#}
-{#            </th>#}
-{##}
-{##}
-{##}
-{#            {% for object in booking_main %}#}
-{#                <td onclick="document.location='page/new.html'" scope="col">#}
-{#                    <ol type="!">#}
-{#                        {% for user in object.user.all %}#}
-{#                            <li>{{ user.username }}</li>#}
-{#                        {% endfor %}#}
-{#                    </ol>#}
-{#                </td>#}
-{##}
-{#            {% endfor %}#}
-{#        </tr>#}
-{#        <tr>#}
-{#            <th scope="row">#</th>#}
-{#            {% for object in booking_main %}#}
-{##}
-{#                <td scope="col">#}
-{##}
-{#                    <h6>Свободных мест: -</h6>#}
-{#                    <p><a class="btn btn-success" href="#" role="button">Забронировать</a></p>#}
-{#                </td>#}
-{##}
-{#            {% endfor %}#}
-{#        </tr>#}
-{##}
-{##}
-{#        </tbody>#}
-{##}
-{#    </table>#}
-{##}
-{##}
-{#    <table class="table table-bordered table-dark">#}
-{##}
-{#        <thead>#}
-{#        <tr>#}
-{#            <th scope="col">#</th>#}
-{##}
-{##}
-{#            {% for object in booking_second %}#}
-{#                <th scope="col">{{ object.title }}</th>#}
-{#            {% endfor %}#}
-{#        </tr>#}
-{#        </thead>#}
-{##}
-{#        <tbody>#}
-{#        <tr>#}
-{##}
-{#            <th scope="row">#}
-{#                <dl>#}
-{#                    <dd>C</dd>#}
-{#                    <dd>О</dd>#}
-{#                    <dd>Т</dd>#}
-{#                    <dd>Р</dd>#}
-{#                    <dd>У</dd>#}
-{#                    <dd>Д</dd>#}
-{#                    <dd>Н</dd>#}
-{#                    <dd>И</dd>#}
-{#                    <dd>К</dd>#}
-{#                    <dd>И</dd>#}
-{#                </dl>#}
-{#            </th>#}
-{##}
-{##}
-{##}
-{#            {% for object in booking_second %}#}
-{#                <td onclick="document.location='page/new.html'" scope="col">#}
-{#                    <ol type="!">#}
-{#                        {% for user in object.user.all %}#}
-{#                            <li>{{ user.username }}</li>#}
-{#                        {% endfor %}#}
-{#                    </ol>#}
-{#                </td>#}
-{##}
-{#            {% endfor %}#}
-{#        </tr>#}
-{#        <tr>#}
-{#            <th scope="row">#</th>#}
-{#            {% for object in booking_second %}#}
-{##}
-{#                <td scope="col">#}
-{##}
-{#                    <h6>Свободных мест: -</h6>#}
-{#                    <p><a class="btn btn-success" href="#" role="button">Забронировать</a></p>#}
-{#                </td>#}
-{##}
-{#            {% endfor %}#}
-{#        </tr>#}
-{##}
-{##}
-{#        </tbody>#}
-{##}
-{#    </table>#}
-
+    {#       <table class="table table-bordered table-dark">#}
+    {##}
+    {#        <thead>#}
+    {#        <tr>#}
+    {#            <th scope="col">#</th>#}
+    {##}
+    {##}
+    {#            {% for object in booking_main %}#}
+    {#                <th scope="col">{{ object.title }}</th>#}
+    {#            {% endfor %}#}
+    {#        </tr>#}
+    {#        </thead>#}
+    {##}
+    {#        <tbody>#}
+    {#        <tr>#}
+    {##}
+    {#            <th scope="row">#}
+    {#                <dl>#}
+    {#                    <dd>C</dd>#}
+    {#                    <dd>О</dd>#}
+    {#                    <dd>Т</dd>#}
+    {#                    <dd>Р</dd>#}
+    {#                    <dd>У</dd>#}
+    {#                 <dd>Д</dd>#}
+    {#                    <dd>Н</dd>#}
+    {#                    <dd>И</dd>#}
+    {#                    <dd>К</dd>#}
+    {#                    <dd>И</dd>#}
+    {#                </dl>#}
+    {#            </th>#}
+    {##}
+    {##}
+    {##}
+    {#            {% for object in booking_main %}#}
+    {#                <td onclick="document.location='page/new.html'" scope="col">#}
+    {#                    <ol type="!">#}
+    {#                        {% for user in object.user.all %}#}
+    {#                            <li>{{ user.username }}</li>#}
+    {#                        {% endfor %}#}
+    {#                    </ol>#}
+    {#                </td>#}
+    {##}
+    {#            {% endfor %}#}
+    {#        </tr>#}
+    {#        <tr>#}
+    {#            <th scope="row">#</th>#}
+    {#            {% for object in booking_main %}#}
+    {##}
+    {#                <td scope="col">#}
+    {##}
+    {#                    <h6>Свободных мест: -</h6>#}
+    {#                    <p><a class="btn btn-success" href="#" role="button">Забронировать</a></p>#}
+    {#                </td>#}
+    {##}
+    {#            {% endfor %}#}
+    {#        </tr>#}
+    {##}
+    {##}
+    {#        </tbody>#}
+    {##}
+    {#    </table>#}
+    {##}
+    {##}
+    {#    <table class="table table-bordered table-dark">#}
+    {##}
+    {#        <thead>#}
+    {#        <tr>#}
+    {#            <th scope="col">#</th>#}
+    {##}
+    {##}
+    {#            {% for object in booking_second %}#}
+    {#                <th scope="col">{{ object.title }}</th>#}
+    {#            {% endfor %}#}
+    {#        </tr>#}
+    {#        </thead>#}
+    {##}
+    {#        <tbody>#}
+    {#        <tr>#}
+    {##}
+    {#            <th scope="row">#}
+    {#                <dl>#}
+    {#                    <dd>C</dd>#}
+    {#                    <dd>О</dd>#}
+    {#                    <dd>Т</dd>#}
+    {#                    <dd>Р</dd>#}
+    {#                    <dd>У</dd>#}
+    {#                    <dd>Д</dd>#}
+    {#                    <dd>Н</dd>#}
+    {#                    <dd>И</dd>#}
+    {#                    <dd>К</dd>#}
+    {#                    <dd>И</dd>#}
+    {#                </dl>#}
+    {#            </th>#}
+    {##}
+    {##}
+    {##}
+    {#            {% for object in booking_second %}#}
+    {#                <td onclick="document.location='page/new.html'" scope="col">#}
+    {#                    <ol type="!">#}
+    {#                        {% for user in object.user.all %}#}
+    {#                            <li>{{ user.username }}</li>#}
+    {#                        {% endfor %}#}
+    {#                    </ol>#}
+    {#                </td>#}
+    {##}
+    {#            {% endfor %}#}
+    {#        </tr>#}
+    {#        <tr>#}
+    {#            <th scope="row">#</th>#}
+    {#            {% for object in booking_second %}#}
+    {##}
+    {#                <td scope="col">#}
+    {##}
+    {#                    <h6>Свободных мест: -</h6>#}
+    {#                    <p><a class="btn btn-success" href="#" role="button">Забронировать</a></p>#}
+    {#                </td>#}
+    {##}
+    {#            {% endfor %}#}
+    {#        </tr>#}
+    {##}
+    {##}
+    {#        </tbody>#}
+    {##}
+    {#    </table>#}
 
     {% for booking_second in weeks %}
-        <table class="table table-bordered table-dark">
-
+        <table class="table table-bordered  table-dark" width="100%">
             <thead>
             <tr>
-                <th scope="col">#</th>
-
+                <th width="2%" scope="col"></th>
 
                 {% for object in booking_second %}
-                    <th scope="col">{{ object.title }}</th>
+                    <th width="14%" scope="col">{{ object.title }}</th>
                 {% endfor %}
             </tr>
             </thead>
-
             <tbody>
             <tr>
-
-                <th scope="row">
+                <th width="2%" scope="row">
                     <dl>
                         <dd>C</dd>
                         <dd>О</dd>
@@ -211,56 +211,44 @@
                         <dd>И</dd>
                     </dl>
                 </th>
-
-
-
                 {% for object in booking_second %}
-                    <td onclick="document.location='page/new.html'" scope="col">
+                    <td width="14%" onclick="document.location='page/new.html'" scope="col">
                         <ol type="!">
                             {% for staff in object.user.all %}
                                 <li>{{ staff.username }}</li>
-{#                                {% if user.is_authenticated %}#}
-{#                                   !!!!!!!!!!!#}
-{#                                {% endif %}#}
+                                {#                                {% if user.is_authenticated %}#}
+                                {#                                   !!!!!!!!!!!#}
+                                {#                                {% endif %}#}
                             {% endfor %}
                         </ol>
                     </td>
-
                 {% endfor %}
             </tr>
             <tr>
-                <th scope="row"></th>
+                <th width="2%" scope="row"></th>
                 {% for object in booking_second %}
 
-                    <td scope="col">
+                    <td width="14%" scope="col">
                         {% if object.user.all.count < 14 and not user in object.user.all %}
-                            <p><a class="btn btn-success" href="#" role="button">Забронировать</a></p>
+                            <p><a class="btn btn-success btn-block" href="{% url 'reserve' str_date=object.day %}" role="button">Забронировать</a></p>
                         {% elif user in object.user.all %}
-                            <p><a class="btn btn-secondary" href="#" role="button">Отменить</a></p>
+                            <p><a class="btn btn-danger btn-block" href="{% url 'unreserve' str_date=object.day %}" role="button">Отменить</a></p>
                         {% elif object.user.all.count == 14 %}
-{#                            <p><a class="btn btn-danger" href="#" role="button">Мест нет</a></p>#}
-                            <button type="button" class="btn btn-secondary btn-lg btn-block">Мест нет</button>
+                            <p><a class="btn btn-warning btn-block disabled" href="#" role="button">Мест нет</a></p>
                         {% endif %}
                     </td>
-
                 {% endfor %}
             </tr>
-
-
             </tbody>
 
         </table>
     {% endfor %}
 
-
-
-
-
     <hr>
 
-    <footer>
-        <p>© Company 2014</p>
-    </footer>
+    {#    <footer>#}
+    {#        <p>booking workplace</p>#}
+    {#    </footer>#}
 </div> <!-- /container -->
 
 
