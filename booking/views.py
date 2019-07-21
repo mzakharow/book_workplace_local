@@ -14,7 +14,7 @@ from booking.models import Booking
 @login_required
 def index(request):
     template = loader.get_template('booking/index.html')
-    first_date = datetime.datetime.now()
+    first_date = datetime.date.today()
     weekday = datetime.datetime.now().weekday()
     weekdays = {0: 'ПН', 1: 'ВТ', 2: 'СР', 3: 'ЧТ', 4: 'ПТ', 5: 'СБ', 6: 'ВС'}
     first_week = []
@@ -25,7 +25,7 @@ def index(request):
         first_week.append(book_object)
     week_list = [first_week]
 
-    for count in range(0, 3):
+    for count in range(0, 2):
         book_list = []
         for key in weekdays:
             date += datetime.timedelta(days=1)
@@ -35,7 +35,7 @@ def index(request):
 
         week_list.append(book_list)
 
-    context = {'booking_main': first_week, 'booking_second': book_list, 'weeks': week_list}
+    context = {'weeks': week_list}
     return HttpResponse(template.render(context, request))
 
 
@@ -56,8 +56,9 @@ def login_view(request):
 def reserve_view(request, str_date):
     date = datetime.datetime.strptime(str_date, "%Y-%m-%d")
     book_object = Booking.objects.get(day=date)
-    if request.user not in book_object.user.all():
+    if request.user not in book_object.user.all() and book_object.free_places > 0:
         book_object.user.add(request.user)
+        book_object.free_places -= 1
         book_object.save()
     return HttpResponseRedirect(reverse('index'))
 
@@ -66,5 +67,7 @@ def unreserve_view(request, str_date):
     date = datetime.datetime.strptime(str_date, "%Y-%m-%d")
     book_object = Booking.objects.get(day=date)
     book_object.user.remove(request.user)
+    book_object.free_places += 1
     book_object.save()
     return HttpResponseRedirect(reverse('index'))
+
