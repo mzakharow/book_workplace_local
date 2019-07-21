@@ -95,10 +95,9 @@ WSGI_APPLICATION = 'book_workplace.wsgi.application'
 DATABASES = {'default': {}}
 try:
     DATABASES = {
-        'default': config(
-            'DATABASE_URL',)
-        # 'default': {
-        #         'DATABASE_URL': config('DATABASE_URL'),
+
+        'default': {
+                'DATABASE_URL': config('DATABASE_URL'),
 
                     # 'ENGINE': config('DB_ENGINE'),
                     # 'NAME': config('DB_NAME'),
@@ -107,7 +106,7 @@ try:
                     # 'HOST': config('DB_HOST'),
                     # 'PORT': '5432',
         }
-    # }
+    }
 except UndefinedValueError:
     db_from_env = dj_database_url.config()
     DATABASES['default'].update(db_from_env)
