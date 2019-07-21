@@ -16,11 +16,11 @@ from decouple import config, UndefinedValueError
 
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG')
-DB_ENGINE = config('DB_ENGINE')
-DB_NAME = config('DB_NAME')
-DB_USER = config('DB_USER')
-DB_PASSWORD = config('DB_PASSWORD')
-DB_HOST = config('DB_HOST')
+#DB_ENGINE = config('DB_ENGINE')
+#DB_NAME = config('DB_NAME')
+#DB_USER = config('DB_USER')
+#DB_PASSWORD = config('DB_PASSWORD')
+#DB_HOST = config('DB_HOST')
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
