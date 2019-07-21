@@ -107,7 +107,7 @@ try:
                     # 'HOST': config('DB_HOST'),
                     # 'PORT': '5432',
         }
-    }
+    # }
 except UndefinedValueError:
     db_from_env = dj_database_url.config()
     DATABASES['default'].update(db_from_env)
