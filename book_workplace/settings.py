@@ -95,8 +95,11 @@ WSGI_APPLICATION = 'book_workplace.wsgi.application'
 DATABASES = {'default': {}}
 try:
     DATABASES = {
-        'default': {
-                'DATABASE_URL': config('DATABASE_URL'),
+        'default': config(
+            'DATABASE_URL',)
+        # 'default': {
+        #         'DATABASE_URL': config('DATABASE_URL'),
+
                     # 'ENGINE': config('DB_ENGINE'),
                     # 'NAME': config('DB_NAME'),
                     # 'USER': config('DB_USER'),
