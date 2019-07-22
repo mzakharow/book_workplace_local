@@ -92,24 +92,30 @@ WSGI_APPLICATION = 'book_workplace.wsgi.application'
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
+
+
 DATABASES = {'default': {}}
-try:
-    DATABASES = {
+# try:
+#     DATABASES = {
+#
+#         'default': {
+#                 'DATABASE_URL': config('DATABASE_URL'),
+#
+#                     # 'ENGINE': config('DB_ENGINE'),
+#                     # 'NAME': config('DB_NAME'),
+#                     # 'USER': config('DB_USER'),
+#                     # 'PASSWORD': config('DB_PASSWORD'),
+#                     # 'HOST': config('DB_HOST'),
+#                     # 'PORT': '5432',
+#         }
+#     }
+# except UndefinedValueError:
+#     db_from_env = dj_database_url.config()
+#     DATABASES['default'].update(db_from_env)
 
-        'default': {
-                'DATABASE_URL': config('DATABASE_URL'),
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
-                    # 'ENGINE': config('DB_ENGINE'),
-                    # 'NAME': config('DB_NAME'),
-                    # 'USER': config('DB_USER'),
-                    # 'PASSWORD': config('DB_PASSWORD'),
-                    # 'HOST': config('DB_HOST'),
-                    # 'PORT': '5432',
-        }
-    }
-except UndefinedValueError:
-    db_from_env = dj_database_url.config()
-    DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
