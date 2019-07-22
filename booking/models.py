@@ -8,9 +8,9 @@ from django.contrib.auth.models import User
 class Booking(models.Model):
     title = models.CharField(max_length=64)
     day = models.DateField()
-    user = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
-    home = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
-    vacant = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
+    user = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='user_list')
+    home = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='home_list')
+    vacant = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='vacant_list')
     free_places = models.IntegerField(blank=True, validators=[MaxValueValidator(14)], default=14)
 
     class Meta:
