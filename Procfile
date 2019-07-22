@@ -1,2 +1,1 @@
-release: python manage.py migrate
-web: gunicorn locallibrary.wsgi --log-file -
+web: gunicorn book_workplace.wsgi --log-file -
