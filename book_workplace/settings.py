@@ -93,7 +93,6 @@ WSGI_APPLICATION = 'book_workplace.wsgi.application'
 #     }
 # }
 
-
 DATABASES = {'default': {}}
 # try:
 #     DATABASES = {
