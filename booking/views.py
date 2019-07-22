@@ -2,13 +2,14 @@ import datetime
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template import loader
 from django.urls import reverse
 
 from booking.forms import LoginForm
-from booking.models import Booking
+from booking.models import Booking, RoleList, DutyAdmin
 
 
 @login_required
@@ -22,6 +23,11 @@ def index(request):
         date = first_date + datetime.timedelta(days=i - weekday)
         title = f'{weekdays.get(i)} {date.strftime("%d.%m.%Y")}'
         book_object, status = Booking.objects.get_or_create(day=date, defaults={'title': title})
+        if status and book_object.day.weekday() < 5:
+            users = list(User.objects.all())
+            book_object.user.add(*users)
+            book_object.free_places -= len(users)
+            book_object.save()
         first_week.append(book_object)
     week_list = [first_week]
 
@@ -31,11 +37,24 @@ def index(request):
             date += datetime.timedelta(days=1)
             title = f'{weekdays.get(key)} {date.strftime("%d.%m.%Y")}'
             book_object, status = Booking.objects.get_or_create(day=date, defaults={'title': title})
+            if status and book_object.day.weekday() < 5:
+                users = list(User.objects.all())
+                book_object.user.add(*users)
+                book_object.free_places -= len(users)
+                book_object.save()
             book_list.append(book_object)
 
         week_list.append(book_list)
 
-    context = {'weeks': week_list}
+    today = datetime.date.today()
+
+    role_list = list(RoleList.objects.all())
+    duty_admin = list(DutyAdmin.objects.all())
+    duty_list = list()
+    for admin in duty_admin:
+        duty_list.insert(admin.day, admin.administrator)
+    context = {'weeks': week_list, 'today': today, 'role_list': role_list, 'duty_admin': duty_admin}
+
     return HttpResponse(template.render(context, request))
 
 

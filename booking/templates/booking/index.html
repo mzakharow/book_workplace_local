@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<div class="navbar navbar-inverse " role="navigation">
+<div class="navbar navbar-inverse navbar-light" role="navigation">
     <div class="container">
         {% if not request.user.is_authenticated %}
             <div class="navbar-header">
@@ -18,150 +18,16 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">Пользователь: {{ request.user }}</a>
             </div>
-            <div class="align-content-center">
-                <ul class="pull-right">
-                    <a class="navbar-header" href='{% url 'logout' %}'><button type="button" class="btn btn-danger btn-sm">Выход</button></a>
-                </ul>
+            <div class="align-content-centr">
+                {#                <ul class="pull-right">#}
+                <a class="navbar-header" href='{% url 'logout' %}'><button type="button" class="btn btn-danger btn-sm">Выход</button></a>
+                {#                </ul>#}
             </div>
         {% endif %}
     </div>
 </div>
 
 <div class="container">
-
-    {#    {% for object in booking %}#}
-    {#        {% for object in item %}#}
-    {#        <p>{{ object.title }}</p>#}
-    {#        {% for user in object.user.all %}#}
-    {#            <p>{{ user.username }}</p>#}
-    {#        {% endfor %}#}
-    {#        {% endfor %}#}
-    {#    {% endfor %}#}
-
-    {#       <table class="table table-bordered table-dark">#}
-    {##}
-    {#        <thead>#}
-    {#        <tr>#}
-    {#            <th scope="col">#</th>#}
-    {##}
-    {##}
-    {#            {% for object in booking_main %}#}
-    {#                <th scope="col">{{ object.title }}</th>#}
-    {#            {% endfor %}#}
-    {#        </tr>#}
-    {#        </thead>#}
-    {##}
-    {#        <tbody>#}
-    {#        <tr>#}
-    {##}
-    {#            <th scope="row">#}
-    {#                <dl>#}
-    {#                    <dd>C</dd>#}
-    {#                    <dd>О</dd>#}
-    {#                    <dd>Т</dd>#}
-    {#                    <dd>Р</dd>#}
-    {#                    <dd>У</dd>#}
-    {#                 <dd>Д</dd>#}
-    {#                    <dd>Н</dd>#}
-    {#                    <dd>И</dd>#}
-    {#                    <dd>К</dd>#}
-    {#                    <dd>И</dd>#}
-    {#                </dl>#}
-    {#            </th>#}
-    {##}
-    {##}
-    {##}
-    {#            {% for object in booking_main %}#}
-    {#                <td onclick="document.location='page/new.html'" scope="col">#}
-    {#                    <ol type="!">#}
-    {#                        {% for user in object.user.all %}#}
-    {#                            <li>{{ user.username }}</li>#}
-    {#                        {% endfor %}#}
-    {#                    </ol>#}
-    {#                </td>#}
-    {##}
-    {#            {% endfor %}#}
-    {#        </tr>#}
-    {#        <tr>#}
-    {#            <th scope="row">#</th>#}
-    {#            {% for object in booking_main %}#}
-    {##}
-    {#                <td scope="col">#}
-    {##}
-    {#                    <h6>Свободных мест: -</h6>#}
-    {#                    <p><a class="btn btn-success" href="#" role="button">Забронировать</a></p>#}
-    {#                </td>#}
-    {##}
-    {#            {% endfor %}#}
-    {#        </tr>#}
-    {##}
-    {##}
-    {#        </tbody>#}
-    {##}
-    {#    </table>#}
-    {##}
-    {##}
-    {#    <table class="table table-bordered table-dark">#}
-    {##}
-    {#        <thead>#}
-    {#        <tr>#}
-    {#            <th scope="col">#</th>#}
-    {##}
-    {##}
-    {#            {% for object in booking_second %}#}
-    {#                <th scope="col">{{ object.title }}</th>#}
-    {#            {% endfor %}#}
-    {#        </tr>#}
-    {#        </thead>#}
-    {##}
-    {#        <tbody>#}
-    {#        <tr>#}
-    {##}
-    {#            <th scope="row">#}
-    {#                <dl>#}
-    {#                    <dd>C</dd>#}
-    {#                    <dd>О</dd>#}
-    {#                    <dd>Т</dd>#}
-    {#                    <dd>Р</dd>#}
-    {#                    <dd>У</dd>#}
-    {#                    <dd>Д</dd>#}
-    {#                    <dd>Н</dd>#}
-    {#                    <dd>И</dd>#}
-    {#                    <dd>К</dd>#}
-    {#                    <dd>И</dd>#}
-    {#                </dl>#}
-    {#            </th>#}
-    {##}
-    {##}
-    {##}
-    {#            {% for object in booking_second %}#}
-    {#                <td onclick="document.location='page/new.html'" scope="col">#}
-    {#                    <ol type="!">#}
-    {#                        {% for user in object.user.all %}#}
-    {#                            <li>{{ user.username }}</li>#}
-    {#                        {% endfor %}#}
-    {#                    </ol>#}
-    {#                </td>#}
-    {##}
-    {#            {% endfor %}#}
-    {#        </tr>#}
-    {#        <tr>#}
-    {#            <th scope="row">#</th>#}
-    {#            {% for object in booking_second %}#}
-    {##}
-    {#                <td scope="col">#}
-    {##}
-    {#                    <h6>Свободных мест: -</h6>#}
-    {#                    <p><a class="btn btn-success" href="#" role="button">Забронировать</a></p>#}
-    {#                </td>#}
-    {##}
-    {#            {% endfor %}#}
-    {#        </tr>#}
-    {##}
-    {##}
-    {#        </tbody>#}
-    {##}
-    {#    </table>#}
 
     {% for week in weeks %}
         <table class="table table-bordered table-dark" width="100%">
@@ -195,17 +61,20 @@
                 {% for object in week %}
 
                     {#                    <td width="14%" onclick="document.location='page/new.html'" scope="col">#}
+
                     <td width="14%" onclick="send('#detailModal1')" scope="col">
-                        <ol type="!">
+                        {#                        <ol type="!">#}
+                        <div class="text-center">
                             {% for staff in object.user.all %}
-                                <li>{{ staff.username }}</li>
+                                {#                                <li>{{ staff.username }}</li>#}
+                                <p>{{ staff.username }}</p>
                                 {#                                {% if user.is_authenticated %}#}
                                 {#                                   !!!!!!!!!!!#}
                                 {#                                {% endif %}#}
                             {% endfor %}
-                        </ol>
+                        </div>
                     </td>
-
+                    {#                        </ol>#}
                 {% endfor %}
             </tr>
             <tr>
@@ -215,11 +84,13 @@
                     {#                    <td width="14%" scope="col"> #}
 
                     <td width="14%" scope="col">
-                        {% if object.user.all.count < 14 and not user in object.user.all %}
+                        {% if today > object.day  %}
+                            <p><a class="btn btn-warning btn-block disabled" href="#" role="button">Закрыто</a></p>
+                        {% elif object.user.all.count < 19 and not user in object.user.all %}
                             <p><a class="btn btn-success btn-block" href="{% url 'reserve' str_date=object.day %}" role="button">Записаться</a></p>
                         {% elif user in object.user.all %}
                             <p><a class="btn btn-danger btn-block" href="{% url 'unreserve' str_date=object.day %}" role="button">Отменить</a></p>
-                        {% elif object.user.all.count == 14 %}
+                        {% elif object.user.all.count == 19 %}
                             <p><a class="btn btn-warning btn-block disabled" href="#" role="button">Зарезервировано</a></p>
                         {% endif %}
                     </td>
@@ -261,7 +132,7 @@
                                 <tr>
                                     <th scope="row"></th>
                                     {% if user == request.user %}
-                                        <td><h6 style="color:#0000ff">{{ user.username }}</h6></td>
+                                        <td><h6 style="color:forestgreen">{{ user.username }}</h6></td>
                                     {% else %}
                                         <td><h6>{{ user.username }}</h6></td>
                                     {% endif %}
@@ -279,29 +150,46 @@
                             </tfoot>
                         </table>
 
-                        <p><h6>Свободных мест: {{ object.free_places }}</h6></p>
+                        <p><h6>Свободных мест:
+                        {% if object.free_places <= 0 %}
+                            нет
+                        {% else %}
+                            {{ object.free_places }}
+                        {% endif %}
+                        , в офисе будет {{ object.user.all.count }} человек.</h6></p>
                         <p><h6>Дежурные: </h6></p>
                         <ul style='list-style-type:square;'>
                             <li>Администратор: -</li>
                             <li>Аналитик: -</li>
                             <li>Робот: -</li>
-                            <li>Программист: -</li>
                             <li>Менеджер: -</li>
+                            {% for admin in duty_admin %}
+                                {% if admin.day == object.day.weekday %}
+                                    <li>Программист: {{ admin.administrator }}</li>
+                                    {% if admin.administrator not in object.user.all %}
+                                        <h6 style="color:red">Дежурный программист не записан!</h6>
+                                    {% endif %}
+                                {% else %}
+                                    <li>Программист: -</li>
+                                {% endif %}
+                            {% endfor %}
                         </ul>
                     </div>
                     <div class="modal-footer">
                         <div class = "row">
-                        {% if object.user.all.count < 14 and not user in object.user.all %}
-                            <p><a class="btn btn-success btn-block" href="{% url 'reserve' str_date=object.day %}" role="button">Записаться</a></p>
-                        {% elif user in object.user.all %}
-                            <p><a class="btn btn-danger btn-block" href="{% url 'unreserve' str_date=object.day %}" role="button">Отменить</a></p>
-                        {% elif object.user.all.count == 14 %}
-                            <p><a class="btn btn-warning btn-block disabled" href="#" role="button">Зарезервировано</a></p>
-                        {% endif %}
-                        <ul class="pull-right">
-                        <p><a class="btn btn-secondary" data-dismiss="modal" role="button">Закрыть</a></p>
-                        </ul>
-                    </div>
+                            {% if today > object.day  %}
+                                <p><a class="btn btn-warning btn-block disabled" href="#" role="button">Закрыто</a></p>
+                            {% elif object.user.all.count < 19 and not user in object.user.all %}
+                                <p><a class="btn btn-success btn-block" href="{% url 'reserve' str_date=object.day %}" role="button">Записаться</a></p>
+                            {% elif user in object.user.all %}
+                                <p><a class="btn btn-danger btn-block" href="{% url 'unreserve' str_date=object.day %}" role="button">Отменить</a></p>
+                            {% elif object.user.all.count == 19 %}
+                                <p><a class="btn btn-warning btn-block disabled" href="#" role="button">Зарезервировано</a></p>
+                            {% endif %}
+                            <ul class="pull-right">
+                                <p><a class="btn btn-secondary" data-dismiss="modal" role="button">Закрыть</a></p>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -310,7 +198,6 @@
 {% endfor %}
 
 <script src="http://code.jquery.com/jquery-latest.js" ></script>
-{#<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>#}
 
 <script src="{% static 'js/bootstrap.min.js'%}"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
