@@ -20,7 +20,9 @@
             </div>
             <div class="align-content-centr">
                 {#                <ul class="pull-right">#}
+                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#detailModalVacant">Отдохнуть</button>
                 <a class="navbar-header" href='{% url 'logout' %}'><button type="button" class="btn btn-danger btn-sm">Выход</button></a>
+
                 {#                </ul>#}
             </div>
         {% endif %}
@@ -59,18 +61,29 @@
                     </dl>
                 </th>
                 {% for object in week %}
-
-                    {#                    <td width="14%" onclick="document.location='page/new.html'" scope="col">#}
-
                     <td width="14%" onclick="send('#detailModal1')" scope="col">
-                        {#                        <ol type="!">#}
-                        <div class="text-center">
+                        {% if object.user.all.count > 0 %}
+                            <h6 style="color:forestgreen">Офис:</h6>
+                        {% endif %}
+                        <div class="text-sm-right">
                             {% for staff in object.user.all %}
-                                {#                                <li>{{ staff.username }}</li>#}
                                 <p>{{ staff.username }}</p>
-                                {#                                {% if user.is_authenticated %}#}
-                                {#                                   !!!!!!!!!!!#}
-                                {#                                {% endif %}#}
+                            {% endfor %}
+                        </div>
+                        {% if object.home.all.count > 0 %}
+                            <h6 style="color:mediumvioletred">Home Office:</h6>
+                        {% endif %}
+                        <div class="text-sm-right">
+                            {% for staff in object.home.all %}
+                                <p>{{ staff.username }}</p>
+                            {% endfor %}
+                        </div>
+                        {% if object.vacant.all.count > 0 %}
+                            <h6 style="color:yellow">Отдых:</h6>
+                        {% endif %}
+                        <div class="text-sm-right">
+                            {% for staff in object.vacant.all %}
+                                <p>{{ staff.username }}</p>
                             {% endfor %}
                         </div>
                     </td>
@@ -128,6 +141,7 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <td><h6>Офис:</h6></td>
                             {% for user in object.user.all %}
                                 <tr>
                                     <th scope="row"></th>
@@ -139,15 +153,7 @@
                                 </tr>
                             {% endfor %}
                             </tbody>
-                            <tfoot>
-                            {#                            <tr>#}
-                            {#                                <th></th>#}
-                            {#                                <th>Всего: {{ object.user.all.count }}</th>#}
-                            {#                                <th></th>#}
-                            {#                                <th class="text" id="cart-total-price"><h4>{{ object.user.all.count }}</h4></th>#}
-                            {#                                <th></th>#}
-                            {#                            </tr>#}
-                            </tfoot>
+                            <tfoot></tfoot>
                         </table>
 
                         <p><h6>Свободных мест:
@@ -170,7 +176,7 @@
                                         <h6 style="color:red">Дежурный программист не записан!</h6>
                                     {% endif %}
                                 {% else %}
-                                    <li>Программист: -</li>
+                                    {#                                    <li>Программист: -</li>#}
                                 {% endif %}
                             {% endfor %}
                         </ul>
@@ -196,6 +202,33 @@
         </div>
     {% endfor %}
 {% endfor %}
+
+<div class="modal fade" id="detailModalVacant" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="detailModalLabel">Задайте период отсутсвия:</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <label for="calendarnav_start">Первый день:</label>
+                    <input type="date" id="calendarnav_start">
+                </p>
+                <p>
+                    <label for="calendarnav">Последний день:</label>
+                    <input type="date" id="calendarnav">
+                </p>
+                <p><a class="btn btn-success btn-block" href="#" role="button">Отдых</a></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="http://code.jquery.com/jquery-latest.js" ></script>
 

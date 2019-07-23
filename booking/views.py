@@ -77,6 +77,10 @@ def reserve_view(request, str_date):
     book_object = Booking.objects.get(day=date)
     if request.user not in book_object.user.all() and book_object.free_places > 0:
         book_object.user.add(request.user)
+        if request.user in book_object.home.all():
+            book_object.home.remove(request.user)
+        elif request.user in book_object.vacant.all():
+            book_object.vacant.remove(request.user)
         book_object.free_places -= 1
         book_object.save()
     return HttpResponseRedirect(reverse('index'))
@@ -86,7 +90,12 @@ def unreserve_view(request, str_date):
     date = datetime.datetime.strptime(str_date, "%Y-%m-%d")
     book_object = Booking.objects.get(day=date)
     book_object.user.remove(request.user)
+    book_object.home.add(request.user)
     book_object.free_places += 1
     book_object.save()
     return HttpResponseRedirect(reverse('index'))
 
+
+def vacant_view(request, start_date, finish_date):
+
+    return HttpResponseRedirect(reverse('index'))
